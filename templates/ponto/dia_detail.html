@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes</title>
+</head>
+<body>
+    <h2>{{ object.dia }}</h2>
+    <p>Entrada1: {{ object.entrada1 }}</p>
+    <p>Saída1: {{ object.saida1 }}</p>
+    <p>Entrada2: {{ object.entrada2 }}</p>
+    <p>Saída2: {{ object.saida2 }}</p>
+    <p>Folga: {{ object.folga }}</p>
+    <a href="{% url 'diadasemana_update' object.pk %}">Editar</a>
+    <a href="{% url 'diadasemana_delete' object.pk %}">Deletar</a>
+</body>
+</html>

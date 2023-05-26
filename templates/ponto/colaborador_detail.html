@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Colaborador</title>
+</head>
+<body>
+
+  <h2>Detalhes do Colaborador: {{ object.user.username }}</h2>
+  <p>CPF: {{ object.cpf }}</p>
+  <a href="{% url 'colaborador_edit' object.id %}">Editar</a>
+  <a href="{% url 'colaborador_delete' object.id %}">Deletar</a>
+
+</body>
+</html>

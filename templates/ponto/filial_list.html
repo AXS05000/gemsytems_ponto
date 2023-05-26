@@ -1,0 +1,25 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Filiais</title>
+</head>
+<body>
+  <h2>Lista de Filiais</h2>
+  <div>
+    {% for filial in object_list %}
+      <div>
+        <h3><a href="{% url 'filial_edit' filial.id %}">{{ filial.nome }}  - <a href="{% url 'filial_delete' filial.id %}"> Excluir</a></a></h3>
+      </div>
+    {% empty %}
+      <p>Nenhuma filial encontrada.</p>
+    {% endfor %}
+  </div>
+  <a href="{% url 'filial_new' %}">Adicionar nova filial</a>
+</body>
+</html>

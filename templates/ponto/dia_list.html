@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dias da Semana</title>
+</head>
+<body>
+  <h2>Dias da Semana</h2>
+  <a href="{% url 'dia_create' %}">Adicionar novo dia</a>
+  <ul>
+    {% for dia in object_list %}
+      <li>
+        <a href="{% url 'dia_detail' dia.pk %}">{{ dia.dia }} - Entrada: {{ dia.entrada1 }} Saída: {{ dia.saida1 }} Entrada: {{ dia.entrada2 }} Saída: {{ dia.saida2 }} </a>
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

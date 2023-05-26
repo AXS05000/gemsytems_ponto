@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colaboradores - Project P</title>
+</head>
+<body>
+
+  <h2>Colaboradores</h2>
+  <a href="{% url 'colaborador_new' %}">Adicionar novo colaborador</a>
+
+
+  <table class="table align-items-center mb-0">
+    <thead>
+      <tr>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nome</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Matricula</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Filial</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Departamento</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">CPF</th>
+        <th class="text-secondary opacity-7"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for colaborador in object_list %}
+      <tr>
+          <tr>
+            <td>
+              <div class="d-flex px-2 py-1">
+                <div class="d-flex flex-column justify-content-center">
+                  <h6 class="mb-0 text-sm">{{ colaborador.nome }}</h6>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">{{ colaborador.matricula }}</p>                            
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">{{ colaborador.departamento.filial }}</p>
+            </td>
+            <td class="align-middle text-center text-sm">
+              <span class="text-secondary text-xs font-weight-bold">{{ colaborador.departamento }}</span>
+            </td>
+            <td class="align-middle text-center">
+              <span class="text-secondary text-xs font-weight-bold">{{ colaborador.cpf }}</span>
+            </td>
+            <td class="align-middle">
+<!-- Start modal -->
+              <div class="container">
+                <div class="row mt-3">
+                  <div class="col-sm-4 col-6 mx-auto">
+                    <!-- Button trigger modal -->
+                    <a href="{% url 'colaborador_edit' colaborador.id %}" class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="material-icons text-sm me-2">edit</i>Editar</a>
+                  </div>
+                </div>
+              </div>
+<!-- End modal -->
+            </td>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escalas Semanais</title>
+</head>
+<body>
+    <h2>Escalas Semanais</h2>
+    <a href="{% url 'escala_create' %}">Adicionar nova Escala</a>
+    <ul>
+      {% for escala in object_list %}
+        <li>
+          <a href="{% url 'escala_detail' escala.pk %}">{{ escala.nome }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+</body>
+</html>

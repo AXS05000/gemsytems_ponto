@@ -1,0 +1,20 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes Folha de Ponto</title>
+</head>
+<body>
+    <h2>{{ object.funcionario }} - {{ object.data_inicio }} até {{ object.data_fim }}</h2>
+    <p>Funcionario: {{ object.funcionario }}</p>
+    <p>Data de início: {{ object.data_inicio }}</p>
+    <p>Data de término: {{ object.data_fim }}</p>
+    <a href="{% url 'folhadeponto_update' object.pk %}">Editar</a>
+    <a href="{% url 'folhadeponto_delete' object.pk %}">Deletar</a>
+  
+</body>
+</html>

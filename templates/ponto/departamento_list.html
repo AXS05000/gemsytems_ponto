@@ -1,0 +1,25 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Departamentos</title>
+</head>
+<body>
+  <h2>Lista de Departamentos</h2>
+  <div>
+    {% for departamento in object_list %}
+      <div>
+        <h3><a href="{% url 'departamento_edit' departamento.id %}">{{ departamento.nome }}  - <a href="{% url 'departamento_delete' departamento.id %}"> Excluir</a></a></h3>
+      </div>
+    {% empty %}
+      <p>Nenhum departamento encontrado.</p>
+    {% endfor %}
+  </div>
+  <a href="{% url 'departamento_new' %}">Adicionar novo departamento</a>
+</body>
+</html>

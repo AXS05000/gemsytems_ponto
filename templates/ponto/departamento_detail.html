@@ -1,0 +1,16 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Departamento</title>
+</head>
+<body>
+    <h2>Detalhes do Departamento: {{ object.nome }}</h2>
+    <a href="{% url 'departamento_edit' object.id %}">Editar</a>
+    <a href="{% url 'departamento_delete' object.id %}">Deletar</a>
+</body>
+</html>
