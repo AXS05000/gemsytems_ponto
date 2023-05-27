@@ -99,8 +99,8 @@ class DiaDaSemana(models.Model):
         ('Domingo', 'Domingo'),
     )
     dia = models.CharField(max_length=10, choices=DIA_ESCOLHAS)
-    entrada1 = models.TimeField()
-    saida1 = models.TimeField()
+    entrada1 = models.TimeField(null=True, blank=True)
+    saida1 = models.TimeField(null=True, blank=True)
     entrada2 = models.TimeField(null=True, blank=True)
     saida2 = models.TimeField(null=True, blank=True)
     folga = models.BooleanField(default=False)

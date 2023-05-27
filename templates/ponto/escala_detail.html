@@ -9,13 +9,20 @@
     <title>Detalhes da Escala</title>
 </head>
 <body>
-    <h2>{{ object.nome }}</h2>
-    <ul>
-      {% for dia in object.dias.all %}
-        <li>{{ dia.dia }}</li>
-      {% endfor %}
-    </ul>
-    <a href="{% url 'escala_update' object.pk %}">Editar</a>
-    <a href="{% url 'escala_delete' object.pk %}">Deletar</a>
+    <h2>Detalhe da Escala Semanal - {{ object.nome }}</h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <ul>
+        {% for dia in object.dias.all %}
+          <li>
+            {{ dia.dia }} - {{ dia.entrada1 }} - {{ dia.saida1 }} - {{ dia.entrada2 }} - {{ dia.saida2 }}
+            {% if dia.folga %}(Folga){% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'escala_update' object.pk %}">Editar</a>
+      <a href="{% url 'escala_delete' object.pk %}">Deletar</a>
+    </form>
 </body>
 </html>
