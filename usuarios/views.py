@@ -12,11 +12,11 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
-from .forms import (ColaboradorForm, CustomUsuarioCreateForm, DepartamentoForm,
-                    DiaDaSemanaForm, EscalaSemanalForm, FilialForm,
-                    FolhaDePontoForm, LoginForm, MarcacaoForm)
-from .models import (Colaborador, CustomUsuario, Departamento, DiaDaSemana,
-                     EscalaSemanal, Filial, FolhaDePonto, Marcacao)
+from .forms import (CustomUsuarioChangeForm, CustomUsuarioCreateForm,
+                    DepartamentoForm, DiaDaSemanaForm, EscalaSemanalForm,
+                    FilialForm, FolhaDePontoForm, LoginForm, MarcacaoForm)
+from .models import (CustomUsuario, Departamento, DiaDaSemana, EscalaSemanal,
+                     Filial, FolhaDePonto, Marcacao)
 
 
 def login_view(request):
@@ -107,16 +107,16 @@ class FolhaDeleteView(DeleteView):
 
 
 class ColaboradorListView(ListView):
-    model = Colaborador
+    model = CustomUsuario
     template_name = 'ponto/colaborador_list.html'
 
 class ColaboradorDetailView(DetailView):
-    model = Colaborador
+    model = CustomUsuario
     template_name = 'ponto/colaborador_detail.html'
 
 class ColaboradorCreateView(CreateView):
-    model = Colaborador
-    form_class = ColaboradorForm
+    model = CustomUsuario
+    form_class = CustomUsuarioCreateForm
     template_name = 'ponto/colaborador_new.html'
     success_url = reverse_lazy('colaborador_list')
 
@@ -134,8 +134,8 @@ class ColaboradorCreateView(CreateView):
 
 
 class ColaboradorUpdateView(UpdateView):
-    model = Colaborador
-    form_class = ColaboradorForm
+    model = CustomUsuario
+    form_class = CustomUsuarioChangeForm
     template_name = 'ponto/colaborador_edit.html'
     success_url = reverse_lazy('colaborador_list')
 
@@ -154,7 +154,7 @@ class ColaboradorUpdateView(UpdateView):
 
 
 class ColaboradorDeleteView(DeleteView):
-    model = Colaborador
+    model = CustomUsuario
     template_name = 'ponto/colaborador_delete.html'
     success_url = reverse_lazy('colaborador_list')
 

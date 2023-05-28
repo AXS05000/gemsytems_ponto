@@ -3,8 +3,8 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
 from .forms import CustomUsuarioChangeForm, CustomUsuarioCreateForm
-from .models import (Colaborador, CustomUsuario, Departamento, DiaDaSemana,
-                     EscalaSemanal, Filial, FolhaDePonto, Marcacao)
+from .models import (CustomUsuario, Departamento, DiaDaSemana, EscalaSemanal,
+                     Filial, FolhaDePonto, Marcacao)
 
 
 class CustomUsuarioCreateForm(UserCreationForm):
@@ -54,10 +54,6 @@ class DepartamentoAdmin(admin.ModelAdmin):
 @admin.register(DiaDaSemana)
 class DiaDaSemanaAdmin(admin.ModelAdmin):
     list_display = ['dia', 'entrada1', 'saida1', 'entrada2', 'saida2', 'folga']
-
-@admin.register(Colaborador)
-class ColaboradorAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'escala_semanal']
 
 @admin.register(Marcacao)
 class MarcacaoAdmin(admin.ModelAdmin):

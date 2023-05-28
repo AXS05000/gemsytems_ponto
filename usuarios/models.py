@@ -6,6 +6,44 @@ from django.db import models
 
 tz = pytz.timezone('America/Sao_Paulo')
 
+
+
+###################################################################################################
+
+
+
+class DiaDaSemana(models.Model):
+    DIA_ESCOLHAS = (
+        ('Segunda', 'Segunda-feira'),
+        ('Terca', 'Terça-feira'),
+        ('Quarta', 'Quarta-feira'),
+        ('Quinta', 'Quinta-feira'),
+        ('Sexta', 'Sexta-feira'),
+        ('Sabado', 'Sábado'),
+        ('Domingo', 'Domingo'),
+    )
+    dia = models.CharField(max_length=10, choices=DIA_ESCOLHAS)
+    entrada1 = models.TimeField(null=True, blank=True)
+    saida1 = models.TimeField(null=True, blank=True)
+    entrada2 = models.TimeField(null=True, blank=True)
+    saida2 = models.TimeField(null=True, blank=True)
+    folga = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.dia} - {self.entrada1} - {self.saida1} - {self.entrada2} - {self.saida2}'
+
+class EscalaSemanal(models.Model):
+    nome = models.CharField(max_length=100)
+    dias = models.ManyToManyField(DiaDaSemana)
+    def __str__(self):
+        return f'{self.nome}'
+
+
+
+###################################################################################################
+
+
+
 class UsuarioManager(BaseUserManager):
     use_in_migrations = True
 
@@ -73,6 +111,7 @@ class CustomUsuario(AbstractUser):
     data_admissao = models.DateField(null=True, blank=True)
     data_demissao = models.DateField(null=True, blank=True)
     data_nascimento = models.DateField(null=True, blank=True)
+    escala_semanal = models.ForeignKey(EscalaSemanal, on_delete=models.CASCADE, null=True, blank=True)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, null=True, blank=True)
     is_staff = models.BooleanField('Membro da equipe', default=False)
     USERNAME_FIELD = 'cpf'
@@ -80,49 +119,22 @@ class CustomUsuario(AbstractUser):
 
     def __str__(self):
         return f'{self.nome}'
+    
+    def save(self, *args, **kwargs):
+        if self._state.adding and not kwargs.get('raw', False):
+            # Verificar se o usuário está sendo criado pelo createsuperuser
+            if self.is_superuser:
+                self.escala_semanal_id = None
+
+        super().save(*args, **kwargs)
 
     objects = UsuarioManager()
 
+    
 
-
-
-###################################################################################################
-
-class DiaDaSemana(models.Model):
-    DIA_ESCOLHAS = (
-        ('Segunda', 'Segunda-feira'),
-        ('Terca', 'Terça-feira'),
-        ('Quarta', 'Quarta-feira'),
-        ('Quinta', 'Quinta-feira'),
-        ('Sexta', 'Sexta-feira'),
-        ('Sabado', 'Sábado'),
-        ('Domingo', 'Domingo'),
-    )
-    dia = models.CharField(max_length=10, choices=DIA_ESCOLHAS)
-    entrada1 = models.TimeField(null=True, blank=True)
-    saida1 = models.TimeField(null=True, blank=True)
-    entrada2 = models.TimeField(null=True, blank=True)
-    saida2 = models.TimeField(null=True, blank=True)
-    folga = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f'{self.dia} - {self.entrada1} - {self.saida1} - {self.entrada2} - {self.saida2}'
-
-class EscalaSemanal(models.Model):
-    nome = models.CharField(max_length=100)
-    dias = models.ManyToManyField(DiaDaSemana)
-    def __str__(self):
-        return f'{self.nome}'
-
-
-class Colaborador(models.Model):
-    nome = models.CharField(max_length=100)
-    escala_semanal = models.ForeignKey(EscalaSemanal, on_delete=models.CASCADE)
-    def __str__(self):
-        return f'{self.nome}'
 
 class Marcacao(models.Model):
-    colaborador = models.ForeignKey(Colaborador, on_delete=models.CASCADE)
+    colaborador = models.ForeignKey(CustomUsuario, on_delete=models.CASCADE)
     dia = models.DateField()
     marcacoes = models.TimeField()
 
@@ -130,7 +142,7 @@ class Marcacao(models.Model):
         return f'{self.dia} - {self.marcacoes}'
     
 class FolhaDePonto(models.Model):
-    colaborador = models.ForeignKey(Colaborador, on_delete=models.CASCADE)
+    colaborador = models.ForeignKey(CustomUsuario, on_delete=models.CASCADE)
     mes = models.PositiveSmallIntegerField()
     ano = models.PositiveSmallIntegerField()
     marcacoes = models.ManyToManyField(Marcacao)
@@ -176,4 +188,3 @@ class FolhaDePonto(models.Model):
         return {'esperadas': timedelta(hours=horas_esperadas), 'trabalhadas': timedelta(hours=horas_trabalhadas), 'extras': timedelta(hours=extras), 'atrasadas': timedelta(hours=atrasadas)}
 
 
-    

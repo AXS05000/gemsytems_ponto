@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'sistema_ponto.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sistema_ponto02',
+        'NAME': 'sistema_ponto03',
         'USER': 'sa',
         'PASSWORD': '2241',
         'HOST': 'localhost',
