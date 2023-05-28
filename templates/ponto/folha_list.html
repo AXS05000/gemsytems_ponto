@@ -10,13 +10,21 @@
 </head>
 <body>
   <h2>Folhas de Ponto</h2>
-  <a href="{% url 'folha_create' %}">Adicionar nova folha de ponto</a>
-  <ul>
-    {% for folha in object_list %}
-      <li>
-        <a href="{% url 'folha_detail' folhadeponto.pk %}">{{ folha.funcionario }} - {{ folha.data_inicio }} até {{ folha.data_fim }}</a>
-      </li>
-    {% endfor %}
-  </ul>
+  <table>
+    <tr>
+      <th>Colaborador</th>
+      <th>Mês</th>
+      <th>Ano</th>
+      <th>Marcações</th>
+    </tr>
+  {% for folha in object_list %}
+    <tr>
+      <td><a href="{% url 'folha_detail' folha.id %}">{{ folha.colaborador.nome }}</a></td>
+      <td>{{ folha.mes }}</td>
+      <td>{{ folha.ano }}</td>
+      <td>{{ folha.marcacoes }}</td>
+    </tr>
+  {% endfor %}
+  </table>
 </body>
 </html>

@@ -172,7 +172,7 @@ class FolhaDePontoCreateView(CreateView):
 class FolhaUpdateView(UpdateView):
     model = FolhaDePonto
     template_name = 'ponto/folha_edit.html'
-    #fields = ['nome', 'filial']
+    fields = ['colaborador', 'mes','ano', 'marcacoes']
     success_url = reverse_lazy('folha_list')
 
 class FolhaDeleteView(DeleteView):
@@ -312,10 +312,6 @@ class MarcacaoPontoListView(LoginRequiredMixin, ListView):
     model = Marcacao
     template_name = 'ponto/marcacao_ponto_list.html'
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.filter(colaborador=self.request.user)
-        return queryset.order_by('-data_hora')
 
 class MarcacaoPontoDetailView(LoginRequiredMixin, DetailView):
     model = Marcacao

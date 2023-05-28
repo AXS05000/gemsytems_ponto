@@ -9,12 +9,12 @@
     <title>Detalhes Folha de Ponto</title>
 </head>
 <body>
-    <h2>{{ object.funcionario }} - {{ object.data_inicio }} até {{ object.data_fim }}</h2>
-    <p>Funcionario: {{ object.funcionario }}</p>
-    <p>Data de início: {{ object.data_inicio }}</p>
-    <p>Data de término: {{ object.data_fim }}</p>
-    <a href="{% url 'folhadeponto_update' object.pk %}">Editar</a>
-    <a href="{% url 'folhadeponto_delete' object.pk %}">Deletar</a>
+    <h2>Folha de Ponto - {{ object.colaborador.nome }}</h2>
+    <p>Mês: {{ object.mes }}</p>
+    <p>Ano: {{ object.ano }}</p>
+    <p>Macações: {{ object.marcacoes }}</p>
+    <a href="{% url 'folha_update' object.pk %}">Editar</a>
+    <a href="{% url 'folha_delete' object.pk %}">Deletar</a>
   
 </body>
 </html>

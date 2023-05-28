@@ -6,14 +6,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar nova folha de ponto</title>
+    <title>Editar Marcação</title>
 </head>
 <body>
-  <h2>Nova Folha de Ponto</h2>
-  <form method="POST">
+  <h2>Editar Marcação</h2>
+  <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Salvar</button>
+    <button type="submit">Atualizar</button>
   </form>
 </body>
 </html>

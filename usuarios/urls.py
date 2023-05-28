@@ -33,8 +33,8 @@ urlpatterns = [
 
     path('marcacao_ponto/', views.MarcacaoPontoListView.as_view(), name='marcacao_ponto_list'),
     path('marcacao_ponto/<int:pk>/', views.MarcacaoPontoDetailView.as_view(), name='marcacao_ponto_detail'),
-    path('marcacao_ponto/new/', views.MarcacaoPontoCreateView.as_view(), name='marcacao_ponto_new'),
-    path('marcacao_ponto/<int:pk>/edit/', views.MarcacaoPontoUpdateView.as_view(), name='marcacao_ponto_edit'),
+    path('marcacao_ponto/new/', views.MarcacaoPontoCreateView.as_view(), name='marcacao_ponto_create'),
+    path('marcacao_ponto/<int:pk>/edit/', views.MarcacaoPontoUpdateView.as_view(), name='marcacao_ponto_update'),
     path('marcacao_ponto/<int:pk>/delete/', views.MarcacaoPontoDeleteView.as_view(), name='marcacao_ponto_delete'),
 
 
@@ -48,6 +48,6 @@ urlpatterns = [
     path('folha/', views.FolhaDePontoListView.as_view(), name='folha_list'),
     path('folha/<int:pk>/', views.FolhaDetailView.as_view(), name='folha_detail'),
     path('folha/new/', views.FolhaDePontoCreateView.as_view(), name='folha_create'),
-    path('folha/<int:pk>/edit/', views.FolhaUpdateView.as_view(), name='folha_edit'),
+    path('folha/<int:pk>/edit/', views.FolhaUpdateView.as_view(), name='folha_update'),
     path('folha/<int:pk>/delete/', views.FolhaDeleteView.as_view(), name='folha_delete'),
 ]

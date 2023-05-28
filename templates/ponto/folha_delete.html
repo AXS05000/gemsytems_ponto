@@ -9,12 +9,12 @@
     <title>Deletar Folha de Ponto</title>
 </head>
 <body>
-    <h2>Deletar Folha de Ponto</h2>
-    <form method="POST">
-      {% csrf_token %}
-      <p>Você tem certeza que deseja deletar a folha de ponto de "{{ object.funcionario }}" de {{ object.data_inicio }} até {{ object.data_fim }}?</p>
-      <button type="submit">Sim, deletar</button>
-    </form>
-    <a href="{% url 'folhadeponto_list' %}">Não, voltar para a lista</a>
+  <h2>Excluir Folha de Ponto</h2>
+  <p>Tem certeza de que deseja excluir esta Folha de Ponto?</p>
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">Confirmar Exclusão</button>
+  </form>
+  <a href="{% url 'folha_list' %}">Não, voltar para a lista</a>
 </body>
 </html>

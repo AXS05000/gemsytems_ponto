@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Marcações</title>
+</head>
+<body>
+  <h2>Lista de Marcações</h2>
+  <a href="{% url 'marcacao_ponto_create' %}">Adicionar nova marcação</a>
+  <table>
+    <thead>
+      <tr>
+        <th>Colaborador</th>
+        <th>Data</th>
+        <th>Marcações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for marcacao in object_list %}
+        <tr>
+          <td>{{ marcacao.colaborador.nome }}</td>
+          <td>{{ marcacao.dia }}</td>
+          <td>{{ marcacao.marcacoes }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="3">Não há marcações registradas.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

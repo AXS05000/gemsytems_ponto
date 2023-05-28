@@ -111,24 +111,30 @@ class DiaDaSemana(models.Model):
 class EscalaSemanal(models.Model):
     nome = models.CharField(max_length=100)
     dias = models.ManyToManyField(DiaDaSemana)
+    def __str__(self):
+        return f'{self.nome}'
 
 
 class Colaborador(models.Model):
     nome = models.CharField(max_length=100)
     escala_semanal = models.ForeignKey(EscalaSemanal, on_delete=models.CASCADE)
-
+    def __str__(self):
+        return f'{self.nome}'
 
 class Marcacao(models.Model):
     colaborador = models.ForeignKey(Colaborador, on_delete=models.CASCADE)
     dia = models.DateField()
     marcacoes = models.TimeField()
 
-
+    def __str__(self):
+        return f'{self.dia} - {self.marcacoes}'
+    
 class FolhaDePonto(models.Model):
     colaborador = models.ForeignKey(Colaborador, on_delete=models.CASCADE)
     mes = models.PositiveSmallIntegerField()
     ano = models.PositiveSmallIntegerField()
     marcacoes = models.ManyToManyField(Marcacao)
+
 
     def calcular_horas(self, dia):
         marcacoes = self.marcacoes.filter(dia=dia).order_by('marcacoes')

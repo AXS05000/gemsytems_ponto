@@ -6,14 +6,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar nova folha de ponto</title>
+    <title>Excluir Marcação</title>
 </head>
 <body>
-  <h2>Nova Folha de Ponto</h2>
-  <form method="POST">
+  <h2>Excluir Marcação</h2>
+  <p>Tem certeza que deseja excluir a marcação do colaborador {{ object.colaborador.nome }} no dia {{ object.dia }}?</p>
+  <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
+    <button type="submit">Confirmar Exclusão</button>
   </form>
 </body>
 </html>

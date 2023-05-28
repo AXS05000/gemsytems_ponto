@@ -9,11 +9,11 @@
     <title>Editar Folha de Ponto</title>
 </head>
 <body>
-    <h2>Editar Folha de Ponto de {{ object.funcionario }}</h2>
-    <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Atualizar</button>
-    </form>
+  <h2>Editar Folha de Ponto</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Atualizar</button>
+  </form>
 </body>
 </html>

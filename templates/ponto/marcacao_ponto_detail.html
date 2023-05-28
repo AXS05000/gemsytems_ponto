@@ -1,0 +1,20 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes Folha de Ponto</title>
+</head>
+<body>
+    <h2>Detalhes da Marcação</h2>
+    <p>Colaborador: {{ object.colaborador.nome }}</p>
+    <p>Data: {{ object.dia }}</p>
+    <p>Marcações: {{ object.marcacoes }}</p>
+    <a href="{% url 'marcacao_ponto_update' object.pk %}">Editar</a>
+    <a href="{% url 'marcacao_ponto_delete' object.pk %}">Deletar</a>
+  
+</body>
+</html>
