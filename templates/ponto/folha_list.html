@@ -22,7 +22,11 @@
       <td><a href="{% url 'folha_detail' folha.id %}">{{ folha.colaborador.nome }}</a></td>
       <td>{{ folha.mes }}</td>
       <td>{{ folha.ano }}</td>
-      <td>{{ folha.marcacoes }}</td>
+      <td>    
+        {% for marcacao in folha.marcacoes.all %}
+        {{ marcacao.dia }} - {{ marcacao.marcacoes }}
+        {% endfor %}
+      </td>
     </tr>
   {% endfor %}
   </table>

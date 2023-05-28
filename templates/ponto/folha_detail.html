@@ -12,7 +12,6 @@
     <h2>Folha de Ponto - {{ object.colaborador.nome }}</h2>
     <p>Mês: {{ object.mes }}</p>
     <p>Ano: {{ object.ano }}</p>
-    <p>Macações: {{ object.marcacoes }}</p>
     <a href="{% url 'folha_update' object.pk %}">Editar</a>
     <a href="{% url 'folha_delete' object.pk %}">Deletar</a>
   

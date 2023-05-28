@@ -139,7 +139,7 @@ class DepartamentoDeleteView(DeleteView):
 ############################################################################################################################
 
 
-# Departamentos
+# Folha de Ponto
 
 class FolhaDePontoListView(ListView):
     model = FolhaDePonto
