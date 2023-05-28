@@ -10,25 +10,25 @@
 </head>
 <body>
   <h2>Folhas de Ponto</h2>
-  <table>
-    <tr>
-      <th>Colaborador</th>
-      <th>Mês</th>
-      <th>Ano</th>
-      <th>Marcações</th>
-    </tr>
   {% for folha in object_list %}
-    <tr>
-      <td><a href="{% url 'folha_detail' folha.id %}">{{ folha.colaborador.nome }}</a></td>
-      <td>{{ folha.mes }}</td>
-      <td>{{ folha.ano }}</td>
-      <td>    
-        {% for marcacao in folha.marcacoes.all %}
-        {{ marcacao.dia }} - {{ marcacao.marcacoes }}
-        {% endfor %}
-      </td>
-    </tr>
+    <h3>{{ folha.colaborador.nome }} - {{ folha.mes }}/{{ folha.ano }}</h3>
+    <table>
+      <tr>
+        <th>Data</th>
+        <th>Marcações</th>
+      </tr>
+      {% regroup folha.marcacoes.all by dia as marcacoes_grouped %}
+      {% for marcacoes in marcacoes_grouped %}
+        <tr>
+          <td>{{ marcacoes.grouper }}</td>
+          <td>
+            {% for marcacao in marcacoes.list|dictsort:'marcacoes' %}
+              <a href="{% url 'marcacao_ponto_update' pk=marcacao.id %}">{{ marcacao.marcacoes }}</a>
+            {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
   {% endfor %}
-  </table>
 </body>
 </html>

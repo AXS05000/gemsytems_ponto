@@ -339,7 +339,7 @@ class MarcacaoPontoUpdateView(LoginRequiredMixin, UpdateView):
     model = Marcacao
     form_class = MarcacaoForm
     template_name = 'ponto/marcacao_ponto_edit.html'
-    success_url = reverse_lazy('marcacao_ponto_list')
+    success_url = reverse_lazy('folha_list')
 
     def form_valid(self, form):
 
