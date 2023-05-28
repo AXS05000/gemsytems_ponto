@@ -17,12 +17,11 @@
         <th>Data</th>
         <th>Marcações</th>
       </tr>
-      {% regroup folha.marcacoes.all by dia as marcacoes_grouped %}
-      {% for marcacoes in marcacoes_grouped %}
+      {% for dia, marcacoes in folha.marcacoes_dict.items %}
         <tr>
-          <td>{{ marcacoes.grouper }}</td>
+          <td>{{ dia }}</td>
           <td>
-            {% for marcacao in marcacoes.list|dictsort:'marcacoes' %}
+            {% for marcacao in marcacoes %}
               <a href="{% url 'marcacao_ponto_update' pk=marcacao.id %}">{{ marcacao.marcacoes }}</a>
             {% endfor %}
           </td>

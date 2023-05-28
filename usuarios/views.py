@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -37,104 +39,6 @@ def index(request):
 
 
 
-############################################################################################################################
-
-# Filiais
-
-
-class FilialListView(ListView):
-    model = Filial
-    template_name = 'ponto/filial_list.html'
-
-class FilialDetailView(DetailView):
-    model = Filial
-    template_name = 'ponto/filial_detail.html'
-
-class FilialCreateView(CreateView):
-    model = Filial
-    form_class = FilialForm
-    template_name = 'ponto/filial_new.html'
-    success_url = reverse_lazy('filial_list')
-
-    def form_valid(self, form):
-        
-
-        response = super().form_valid(form)
-        messages.success(self.request, 'A filial foi criado com sucesso!')
-        return response
-
-    def form_invalid(self, form):
-        response = super().form_invalid(form)
-        messages.error(
-            self.request, 'Ocorreu um erro ao criar a filial. Por favor, tente novamente.')
-        return response
-
-class FilialUpdateView(UpdateView):
-    model = Filial
-    template_name = 'ponto/filial_edit.html'
-    fields = '__all__'
-    success_url = reverse_lazy('filial_list')
-
-class FilialDeleteView(DeleteView):
-    model = Filial
-    template_name = 'ponto/filial_delete.html'
-    success_url = reverse_lazy('filial_list')
-
-
-
-
-
-
-
-
-
-
-############################################################################################################################
-
-
-
-
-# Departamentos
-
-class DepartamentoListView(ListView):
-    model = Departamento
-    template_name = 'ponto/departamento_list.html'
-
-class DepartamentoDetailView(DetailView):
-    model = Departamento
-    template_name = 'ponto/departamento_detail.html'
-
-class DepartamentoCreateView(CreateView):
-    model = Departamento
-    form_class = DepartamentoForm
-    template_name = 'ponto/departamento_new.html'
-    success_url = reverse_lazy('departamento_list')
-    def form_valid(self, form):
-        
-
-        response = super().form_valid(form)
-        messages.success(self.request, 'O departamento foi criado com sucesso!')
-        return response
-
-    def form_invalid(self, form):
-        response = super().form_invalid(form)
-        messages.error(
-            self.request, 'Ocorreu um erro ao criar o departamento. Por favor, tente novamente.')
-        return response
-
-
-
-class DepartamentoUpdateView(UpdateView):
-    model = Departamento
-    template_name = 'ponto/departamento_edit.html'
-    fields = ['nome', 'filial']
-    success_url = reverse_lazy('departamento_list')
-
-class DepartamentoDeleteView(DeleteView):
-    model = Departamento
-    template_name = 'ponto/departamento_delete.html'
-    success_url = reverse_lazy('departamento_list')
-
 
 ############################################################################################################################
 
@@ -144,6 +48,20 @@ class DepartamentoDeleteView(DeleteView):
 class FolhaDePontoListView(ListView):
     model = FolhaDePonto
     template_name = 'ponto/folha_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        folhas = context['object_list']
+
+        for folha in folhas:
+            marcacoes_dict = defaultdict(list)
+
+            for marcacao in folha.marcacoes.all().order_by('dia', 'marcacoes'):
+                marcacoes_dict[marcacao.dia].append(marcacao)
+
+            folha.marcacoes_dict = dict(marcacoes_dict)
+
+        return context
 
 class FolhaDetailView(DetailView):
     model = FolhaDePonto
@@ -420,12 +338,105 @@ class DiaDaSemanaDeleteView(LoginRequiredMixin, DeleteView):
 
 
 
+
+
+############################################################################################################################
+
+# Filiais
+
+
+class FilialListView(ListView):
+    model = Filial
+    template_name = 'ponto/filial_list.html'
+
+class FilialDetailView(DetailView):
+    model = Filial
+    template_name = 'ponto/filial_detail.html'
+
+class FilialCreateView(CreateView):
+    model = Filial
+    form_class = FilialForm
+    template_name = 'ponto/filial_new.html'
+    success_url = reverse_lazy('filial_list')
+
+    def form_valid(self, form):
+        
+
+        response = super().form_valid(form)
+        messages.success(self.request, 'A filial foi criado com sucesso!')
+        return response
+
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        messages.error(
+            self.request, 'Ocorreu um erro ao criar a filial. Por favor, tente novamente.')
+        return response
+
+class FilialUpdateView(UpdateView):
+    model = Filial
+    template_name = 'ponto/filial_edit.html'
+    fields = '__all__'
+    success_url = reverse_lazy('filial_list')
+
+class FilialDeleteView(DeleteView):
+    model = Filial
+    template_name = 'ponto/filial_delete.html'
+    success_url = reverse_lazy('filial_list')
+
+
+
+
+
+
+
+
+
+
 ############################################################################################################################
 
 
 
 
+# Departamentos
 
+class DepartamentoListView(ListView):
+    model = Departamento
+    template_name = 'ponto/departamento_list.html'
+
+class DepartamentoDetailView(DetailView):
+    model = Departamento
+    template_name = 'ponto/departamento_detail.html'
+
+class DepartamentoCreateView(CreateView):
+    model = Departamento
+    form_class = DepartamentoForm
+    template_name = 'ponto/departamento_new.html'
+    success_url = reverse_lazy('departamento_list')
+    def form_valid(self, form):
+        
+
+        response = super().form_valid(form)
+        messages.success(self.request, 'O departamento foi criado com sucesso!')
+        return response
+
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        messages.error(
+            self.request, 'Ocorreu um erro ao criar o departamento. Por favor, tente novamente.')
+        return response
+
+
+
+class DepartamentoUpdateView(UpdateView):
+    model = Departamento
+    template_name = 'ponto/departamento_edit.html'
+    fields = ['nome', 'filial']
+    success_url = reverse_lazy('departamento_list')
+
+class DepartamentoDeleteView(DeleteView):
+    model = Departamento
+    template_name = 'ponto/departamento_delete.html'
+    success_url = reverse_lazy('departamento_list')
 
 
 
