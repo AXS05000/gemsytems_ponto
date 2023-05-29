@@ -1,5 +1,7 @@
 from collections import defaultdict
+from datetime import datetime
 
+import pytz
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -7,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -18,6 +21,8 @@ from .forms import (CustomUsuarioChangeForm, CustomUsuarioCreateForm,
 from .models import (CustomUsuario, Departamento, DiaDaSemana, EscalaSemanal,
                      Filial, FolhaDePonto, Marcacao)
 
+saopaulo_tz = pytz.timezone('America/Sao_Paulo')
+saopaulo_time = datetime.now(saopaulo_tz)
 
 def login_view(request):
     if request.method == 'POST':
@@ -242,15 +247,20 @@ class MarcacaoPontoCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('marcacao_ponto_list')
 
     def form_valid(self, form):
+        # Aqui nós definimos o colaborador, o dia e a marcação do ponto automaticamente antes de validar o form
+        form.instance.colaborador = self.request.user
+        form.instance.dia = timezone.now().astimezone(saopaulo_tz).date()
+        form.instance.marcacoes = timezone.now().astimezone(saopaulo_tz).time()
 
+        
         response = super().form_valid(form)
-        messages.success(self.request, 'O Ponto foi atualizado com sucesso!')
+        messages.success(self.request, 'O Ponto foi marcado com sucesso!')
         return response
 
     def form_invalid(self, form):
         response = super().form_invalid(form)
         messages.error(
-            self.request, 'Ocorreu um erro ao atualizar o Ponto. Por favor, tente novamente.')
+            self.request, 'Ocorreu um erro ao marcar o Ponto. Por favor, tente novamente.')
         return response
 
 class MarcacaoPontoUpdateView(LoginRequiredMixin, UpdateView):

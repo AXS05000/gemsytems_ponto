@@ -90,7 +90,7 @@ class EscalaSemanalForm(forms.ModelForm):
 class MarcacaoForm(forms.ModelForm):
     class Meta:
         model = Marcacao
-        fields = ['colaborador', 'dia', 'marcacoes']
+        fields = []
 
 class FolhaDePontoForm(forms.ModelForm):
     class Meta:
